@@ -186,10 +186,10 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.gang.grade.level = PlayerData.gang.grade.level or 0
     -- Other
     PlayerData.position = PlayerData.position or QBConfig.DefaultSpawn
-    PlayerData.items = GetResourceState("qbr-inventory") ~= "missing"
-            and exports["qbr-inventory"]:LoadInventory(PlayerData.source, PlayerData.citizenid)
-        or {}
-    return QBCore.Player.CreatePlayer(PlayerData, Offline)
+	PlayerData.items = GetResourceState("as-inventory") ~= "missing"
+					and exports["as-inventory"]:LoadInventory(PlayerData.source, PlayerData.citizenid)
+				or {}
+			return ASRCore.Player.CreatePlayer(PlayerData, Offline)
 end
 
 -- On player logout
@@ -740,8 +740,8 @@ function QBCore.Player.Save(source)
                 metadata = json.encode(PlayerData.metadata),
             }
         )
-        if GetResourceState("qbr-inventory") ~= "missing" then
-            exports["qbr-inventory"]:SaveInventory(source)
+        if GetResourceState("as-inventory") ~= "missing" then
+            exports["as-inventory"]:SaveInventory(source)
         end
         QBCore.ShowSuccess(GetCurrentResourceName(), PlayerData.name .. " PLAYER SAVED!")
     else
@@ -860,10 +860,10 @@ end
 -- Inventory Backwards Compatibility
 
 function QBCore.Player.SaveInventory(source)
-    if GetResourceState("qbr-inventory") == "missing" then
+    if GetResourceState("as-inventory") == "missing" then
         return
     end
-    exports["qbr-inventory"]:SaveInventory(source, false)
+    exports["as-inventory"]:SaveInventory(source, false)
 end
 
 function QBCore.Player.SaveOfflineInventory(PlayerData)
@@ -991,3 +991,4 @@ function QBCore.Player.CreateSerialNumber()
 end
 
 PaycheckInterval() -- This starts the paycheck system
+
